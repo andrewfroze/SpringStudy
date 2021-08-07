@@ -26,4 +26,12 @@
         </constructor-arg>
     </bean>
 
+    <bean id="fileEventLogger" class="com.andrewfroze.springApp.FileEventLogger" init-method="init">
+        <constructor-arg value="src/main/resources/eventLog.log"/>
+    </bean>
+    <bean id="cacheFileEventLogger" class="com.andrewfroze.springApp.CacheFileEventLogger" destroy-method="destroy">
+        <constructor-arg value="src/main/resources/eventLog.log"/>
+        <constructor-arg value="10"/>
+    </bean>
+
 </beans>

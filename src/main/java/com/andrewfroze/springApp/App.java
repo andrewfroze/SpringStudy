@@ -1,14 +1,16 @@
 package com.andrewfroze.springApp;
 
-import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import java.io.IOException;
 
 public class App {
     private Client client;
     private EventLogger eventLogger;
 
-    public static void main(String[] args) {
-        ApplicationContext context = new ClassPathXmlApplicationContext("BeanConfiguration.xml");
+    public static void main(String[] args) throws IOException {
+        ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("BeanConfiguration.xml");
 
         App app = (App) context.getBean("app");
 
@@ -20,9 +22,11 @@ public class App {
 
         app.logEvent(event1);
         app.logEvent(event2);
+
+         context.close();
     }
 
-    private void logEvent(Event event) {
+    private void logEvent(Event event) throws IOException {
         event.setMsg(event.getMsg().replaceAll(client.getId(), client.getFullName()));
         eventLogger.logEvent(event);
     }
