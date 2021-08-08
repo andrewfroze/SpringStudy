@@ -18,15 +18,15 @@
         <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
     </bean>
 
-    <bean id="client" class="com.andrewfroze.springApp.Client">
+    <bean id="client" class="com.andrewfroze.springApp.xmlConfigurated.entity.Client">
         <constructor-arg value="${id}"/>
         <constructor-arg  value="${name}"/>
         <property name="greeting" value="${greeting}"/>
     </bean>
 
-    <bean id="consoleEventLogger" class="com.andrewfroze.springApp.ConsoleEventLogger" />
+    <bean id="consoleEventLogger" class="com.andrewfroze.springApp.xmlConfigurated.logger.ConsoleEventLogger" />
 
-    <bean id="app" class="com.andrewfroze.springApp.App">
+    <bean id="app" class="com.andrewfroze.springApp.xmlConfigurated.App">
         <constructor-arg ref="client"/>
         <constructor-arg ref="consoleEventLogger"/>
         <constructor-arg>
@@ -37,7 +37,7 @@
         </constructor-arg>
     </bean>
 
-    <bean id="event" class="com.andrewfroze.springApp.Event" scope="prototype">
+    <bean id="event" class="com.andrewfroze.springApp.xmlConfigurated.entity.event.Event" scope="prototype">
         <constructor-arg>
             <bean class="java.util.Date"/>
         </constructor-arg>
@@ -46,15 +46,15 @@
         </constructor-arg>
     </bean>
 
-    <bean id="fileEventLogger" class="com.andrewfroze.springApp.FileEventLogger" init-method="init">
+    <bean id="fileEventLogger" class="com.andrewfroze.springApp.xmlConfigurated.logger.FileEventLogger" init-method="init">
         <constructor-arg value="src/main/resources/eventLog.log"/>
     </bean>
-    <bean id="cacheFileEventLogger" class="com.andrewfroze.springApp.CacheFileEventLogger" destroy-method="destroy">
+    <bean id="cacheFileEventLogger" class="com.andrewfroze.springApp.xmlConfigurated.logger.CacheFileEventLogger" destroy-method="destroy">
         <constructor-arg value="src/main/resources/eventLog.log"/>
         <constructor-arg value="10"/>
     </bean>
 
-    <bean id="combinedEventLogger" class="com.andrewfroze.springApp.CombinedEventLogger">
+    <bean id="combinedEventLogger" class="com.andrewfroze.springApp.xmlConfigurated.logger.CombinedEventLogger">
         <constructor-arg>
             <list>
                 <ref bean="consoleEventLogger"/>

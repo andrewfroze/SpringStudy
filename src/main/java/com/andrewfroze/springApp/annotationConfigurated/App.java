@@ -1,7 +1,14 @@
-package com.andrewfroze.springApp;
+package com.andrewfroze.springApp.annotationConfigurated;
 
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import com.andrewfroze.springApp.annotationConfigurated.configuration.AppConfig;
+import com.andrewfroze.springApp.annotationConfigurated.entity.Client;
+import com.andrewfroze.springApp.annotationConfigurated.entity.event.Event;
+import com.andrewfroze.springApp.annotationConfigurated.entity.event.EventType;
+import com.andrewfroze.springApp.annotationConfigurated.logger.EventLogger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.io.IOException;
 import java.util.Map;
@@ -12,9 +19,9 @@ public class App {
     private Map<EventType, EventLogger> loggers;
 
     public static void main(String[] args) throws IOException {
-        ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("BeanConfiguration.xml");
+        ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
-        App app = (App) context.getBean("app");
+        App app = context.getBean(App.class);
 
         Event event1 = context.getBean(Event.class);
         event1.setMsg("Some event for 1");
@@ -24,8 +31,6 @@ public class App {
 
         app.logEvent(EventType.INFO, event1);
         app.logEvent(EventType.ERROR, event2);
-
-         context.close();
     }
 
     private void logEvent(EventType eventType, Event event) throws IOException {

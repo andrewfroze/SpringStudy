@@ -1,4 +1,6 @@
-package com.andrewfroze.springApp;
+package com.andrewfroze.springApp.xmlConfigurated.logger;
+
+import com.andrewfroze.springApp.xmlConfigurated.entity.event.Event;
 
 import java.io.IOException;
 import java.util.Collection;

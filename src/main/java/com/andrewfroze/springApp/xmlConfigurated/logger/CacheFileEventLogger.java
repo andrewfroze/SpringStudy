@@ -1,5 +1,6 @@
-package com.andrewfroze.springApp;
+package com.andrewfroze.springApp.xmlConfigurated.logger;
 
+import com.andrewfroze.springApp.xmlConfigurated.entity.event.Event;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;

@@ -1,9 +1,16 @@
-package com.andrewfroze.springApp;
+package com.andrewfroze.springApp.annotationConfigurated.entity;
+
+import org.springframework.beans.factory.annotation.Value;
 
 public class Client {
 
+    @Value("${client.id}")
     private String id;
+
+    @Value("${client.name}")
     private String fullName;
+
+    @Value("${client.greeting}")
     private String greeting;
 
     public Client(String id, String fullName) {

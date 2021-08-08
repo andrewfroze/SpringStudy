@@ -1,4 +1,4 @@
-package com.andrewfroze.springApp;
+package com.andrewfroze.springApp.xmlConfigurated.entity.event;
 
 import java.text.DateFormat;
 import java.util.Date;
