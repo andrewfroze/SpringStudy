@@ -4,10 +4,12 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.IOException;
+import java.util.Map;
 
 public class App {
     private Client client;
-    private EventLogger eventLogger;
+    private EventLogger defaultLogger;
+    private Map<EventType, EventLogger> loggers;
 
     public static void main(String[] args) throws IOException {
         ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("BeanConfiguration.xml");
@@ -20,19 +22,23 @@ public class App {
         Event event2 = context.getBean(Event.class);
         event2.setMsg("Some event for 2");
 
-        app.logEvent(event1);
-        app.logEvent(event2);
+        app.logEvent(EventType.INFO, event1);
+        app.logEvent(EventType.ERROR, event2);
 
          context.close();
     }
 
-    private void logEvent(Event event) throws IOException {
-        event.setMsg(event.getMsg().replaceAll(client.getId(), client.getFullName()));
-        eventLogger.logEvent(event);
+    private void logEvent(EventType eventType, Event event) throws IOException {
+        EventLogger logger = loggers.get(eventType);
+        if (logger == null) {
+            logger = defaultLogger;
+        }
+        logger.logEvent(event);
     }
 
-    public App(Client client, EventLogger eventLogger) {
+    public App(Client client, EventLogger eventLogger, Map<EventType, EventLogger> loggers) {
         this.client = client;
-        this.eventLogger = eventLogger;
+        this.defaultLogger = eventLogger;
+        this.loggers = loggers;
     }
 }
